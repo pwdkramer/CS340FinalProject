@@ -3,6 +3,7 @@
 <h2>Schools</h2>
 
 <a href="/">Home</a> <a href="/schools.hbs">Schools</a> <a href="/teachers.hbs">Teachers</a> <a href="/students.hbs">Students</a> <a href="/classes.hbs">Classes</a> <a href="/students_classes.hbs">Students_Classes</a>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
 <h2>Search Using an HTML Form</h2>
 <p>Search by school name using the field below. Partial school names are OK too!</p>
@@ -30,6 +31,7 @@
                 {{@key}}
             </th>
             {{/each}}
+            <th>delete</th>
         </tr>
     </thead>
 
@@ -38,13 +40,15 @@
 
         {{!-- For each row, print the school_id and school_name, in order --}}
         {{#each data}}
-        <tr>
+        <tr data-value={{this.school_id}}>
             <td>{{this.school_id}}</td>
             <td>{{this.school_name}}</td>
+            <td><button onclick="deleteSchool({{this.school_id}})">Delete</button></td>
         </tr>
         {{/each}}
     </tbody>
 </table>
+<script src="./js/delete_school.js"></script>
 
 {{!-- Form to add a record to the table  --}}
 <h2>Adding Data with AJAX</h2>

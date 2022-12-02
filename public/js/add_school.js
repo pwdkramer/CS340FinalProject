@@ -63,13 +63,24 @@ addRowToTable = (data) => {
     let schoolIdCell = document.createElement("TD");
     let schoolNameCell = document.createElement("TD");
 
+    let deleteCell = document.createElement("TD");
+
     // Fill the cells with correct data
     schoolIdCell.innerText = newRow.school_id;
     schoolNameCell.innerText = newRow.school_name;
 
+    deleteCell = document.createElement("button");
+    deleteCell.innerHTML = "Delete";
+    deleteCell.onclick = function(){
+        deleteSchool(newRow.school_id);
+    };
+
     // Add the cells to the row 
     row.appendChild(schoolIdCell);
     row.appendChild(schoolNameCell);
+    row.appendChild(deleteCell);
+
+    row.setAttribute('data-value', newRow.school_id);
     
     // Add the row to the table
     currentTable.appendChild(row);

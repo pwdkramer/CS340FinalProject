@@ -88,6 +88,25 @@ app.post('/add-school-ajax', function(req, res)
         })
     });
 
+
+app.delete('/delete-school-ajax/', function(req,res,next)
+    {
+    let data = req.body;
+    let schoolID = parseInt(data.school_id);
+    let deleteSchools = `DELETE FROM Schools WHERE school_id = ?`;
+
+        db.pool.query(deleteSchools, [schoolID], function(error, rows, fields){
+
+            if (error) {
+                console.log(error);
+                res.sendStatus(400);
+            }
+            else
+            {
+                res.sendStatus(204);
+            }
+        })});
+
 /*
     LISTENER
 */
