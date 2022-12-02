@@ -8,7 +8,7 @@ addClassForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
     // Get form fields we need to get data from
-    let inputTeacherID = document.getElementById("input-teacher_id");
+    let inputTeacherID = document.getElementById("input-teacher_id-ajax");
     let inputClassName = document.getElementById("input-class_name");
     let inputClassSection = document.getElementById("input-class_section");
     let inputMaxStudents = document.getElementById("input-max_students");
@@ -78,6 +78,8 @@ addRowToTable = (data) => {
     let classSectionCell = document.createElement("TD");
     let maxStudentsCell = document.createElement("TD");
 
+    let deleteCell = document.createElement("TD");
+
     // Fill the cells with correct data
     classIDCell.innerText = newRow.class_id;
     teacherIDCell.innerText = newRow.teacher_id;
@@ -85,12 +87,21 @@ addRowToTable = (data) => {
     classSectionCell.innerText = newRow.class_section;
     maxStudentsCell.innerText = newRow.max_students;
 
+    deleteCell = document.createElement("button");
+    deleteCell.innerHTML = "Delete";
+    deleteCell.onclick = function(){
+        deleteClass(newRow.class_id);
+    };
+
     // Add the cells to the row 
     row.appendChild(classIDCell);
     row.appendChild(teacherIDCell);
     row.appendChild(classNameCell);
     row.appendChild(classSectionCell);
     row.appendChild(maxStudentsCell);
+    row.appendChild(deleteCell);
+
+    row.setAttribute('data-value', newRow.class_id);
     
     // Add the row to the table
     currentTable.appendChild(row);

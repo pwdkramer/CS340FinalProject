@@ -357,12 +357,43 @@ app.put('/put-student-ajax', function(req, res, next){
 
 // Classes
 app.get('/classes.hbs', function(req, res) {
-    let query1 = "SELECT * FROM Classes;";
+    let query1;
+
+    if (req.query.class_name === undefined)
+    {
+        query1 = "SELECT * FROM Classes;";
+    }
+
+    else
+    {
+        query1 = `SELECT * FROM Classes WHERE class_name LIKE "${req.query.class_name}%"`;
+    }
+
+    let query2 = "SELECT * FROM Teachers;";
 
     db.pool.query(query1, function(error, rows, fields) {
-        res.render('classes', {data: rows});
+
+        let classes = rows;
+
+        db.pool.query(query2, (error, rows, fields) => {
+            let teachers = rows;
+
+            let teachermap = {}
+            teachers.map(teacher => {
+                let teacher_id = parseInt(teacher.teacher_id, 10);
+
+                teachermap[teacher_id] = teacher["last_name"];
+            })
+
+            classes = classes.map(aclass => {
+                return Object.assign(aclass, {teacher_id: teachermap[aclass.teacher_id]})
+            })
+
+            return res.render('classes', {data: classes, teachers: teachers});
+        })
+
     })
-})
+});
 
 
 app.post('/add-class-ajax', function(req, res)
@@ -392,6 +423,23 @@ app.post('/add-class-ajax', function(req, res)
                     res.send(rows);
                 }
             })
+        }
+    })
+});
+
+
+app.delete('/delete-class-ajax', function(req, res, next) {
+    let data = req.body;
+    let classID = parseInt(data.class_id);
+    let deleteClasses = `DELETE FROM Classes WHERE class_id = ?`;
+
+    db.pool.query(deleteClasses, [classID], function(error, rows, fields) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        }
+        else {
+            res.sendStatus(204);
         }
     })
 });
