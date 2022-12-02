@@ -62,23 +62,3 @@
 
 {{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
 <script src="./js/add_school.js"></script>
-
-<h2>Updating A School's Name Form</h2>
-<p>To update a specific school's name select their name from the drop-down menu on the left and enter the desired name in the text box on the right</p>
-<form id="update-school-form-ajax">
-
-    <label for="input-currentName">Current name: </label>
-    <select name="input-currentName" id="mySelect">
-        <option value="test">Select a School</option>
-        {{#each data}}
-        <option value="{{this.school_id}}">{{this.school_name}}</option>
-        {{/each}}
-    </select>
-
-    <label for="input-newName">New Name: </label>
-    <input type="text" name="input-newName" id="input-school_name-update">
-    <input type="submit">
-
-</form>
-
-<script src="./js/update_school.js"></script>
