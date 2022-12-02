@@ -30,11 +30,21 @@ app.get('/', function(req, res)
 //Schools
 app.get('/schools.hbs', function(req, res)
     {  
-        let query1 = "SELECT * FROM Schools;";                  // Define our query
+        let query1;                 // Define our query
+
+        if(req.query.school_name === undefined)
+        {
+            query1 = "SELECT * FROM Schools;";
+        }
+        else
+        {
+            query1 = `SELECT * FROM Schools WHERE school_name LIKE "${req.query.school_name}%"`;
+        }
 
         db.pool.query(query1, function(error, rows, fields){    // Execute the query
+            let schools = rows;
 
-            res.render('schools', {data: rows});                // Render the schools.hbs file, and also send the renderer
+            res.render('schools', {data: schools});                // Render the schools.hbs file, and also send the renderer
         })                                                      // an object where 'data' is equal to the 'rows' we
     });                                                         // received back from the query
 

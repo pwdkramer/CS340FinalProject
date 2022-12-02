@@ -4,6 +4,18 @@
 
 <a href="/">Home</a> <a href="/schools.hbs">Schools</a> <a href="/teachers.hbs">Teachers</a> <a href="/students.hbs">Students</a> <a href="/classes.hbs">Classes</a> <a href="/students_classes.hbs">Students_Classes</a>
 
+<h2>Search Using an HTML Form</h2>
+<p>Search by school name using the field below. Partial school names are OK too!</p>
+<form id="search-school-html" method='GET' action='/schools.hbs'>
+    <label for="input-school_name">Search by School Name: </label>
+    <input type="text" name="school_name" id="input-school_name-html-search">
+    
+    <input type="submit">
+    <a href='/schools.hbs'><button>Reset</button></a>
+</form>
+
+<br><br><br>
+
 {{!-- Create a table --}}
 <table id="schools-table">
 
