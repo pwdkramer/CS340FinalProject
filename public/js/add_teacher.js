@@ -78,7 +78,7 @@ addRowToTable = (data) => {
 
     // Create a row and 4 cells
     let row = document.createElement("TR");
-    let teacherIdCell = docoument.createElement("TD");
+    let teacherIdCell = document.createElement("TD");
     let schoolIdCell = document.createElement("TD");
     let firstNameCell = document.createElement("TD");
     let lastNameCell = document.createElement("TD");
