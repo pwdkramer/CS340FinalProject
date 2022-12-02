@@ -355,6 +355,47 @@ app.put('/put-student-ajax', function(req, res, next){
 });
 
 
+// Classes
+app.get('/classes.hbs', function(req, res) {
+    let query1 = "SELECT * FROM Classes;";
+
+    db.pool.query(query1, function(error, rows, fields) {
+        res.render('classes', {data: rows});
+    })
+})
+
+
+app.post('/add-class-ajax', function(req, res)
+{
+    let data = req.body;
+
+    let teacher_id = parseInt(data.teacher_id);
+    if (isNaN(teacher_id))
+    {
+        teacher_id = 'NULL'
+    }
+
+    query1 = `INSERT INTO Classes (teacher_id, class_name, class_section, max_students) VALUES (${teacher_id}, '${data.class_name}', '${data.class_section}', '${data.max_students}')`;
+    db.pool.query(query1, function(error, rows, fields) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        }
+        else {
+            query2 = `SELECT * FROM Classes;`;
+            db.pool.query(query2, function(error, rows, fields) {
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                else {
+                    res.send(rows);
+                }
+            })
+        }
+    })
+});
+
 /*
     LISTENER
 */
