@@ -108,32 +108,52 @@ app.delete('/delete-school-ajax', function(req,res,next)
         })});
 
 
-app.put('/put-school-ajax', function(req,res,next){
+
+//Teachers
+app.get('/teachers.hbs', function(req, res)
+    {  
+        let query1 = "SELECT * FROM Teachers;";                 // Define our query
+
+        db.pool.query(query1, function(error, rows, fields){    // Execute the query
+
+            res.render('teachers', {data: rows});               // Render the teachers.hbs file, and also send the renderer
+        })                                                      // an object where 'data' is equal to the 'rows' we
+    });                                                         // received back from the query
+
+
+app.post('/add-teacher-ajax', function(req, res)
+{
     let data = req.body;
 
-    let school = parseInt(data.currentname);
-    let school_name = parseInt(data.newname);
+    //Capture NULL values
+    let school_id = parseInt(data.school_id);
+    if (isNaN(school_id))
+    {
+        school_id = 'NULL'
+    }
 
-    let queryUpdateName = `UPDATE Schools SET school_name = ? WHERE Schools.school_id = ?`;
-    let selectName = `SELECT * FROM Schools WHERE school_id = ?`;
+    query1 = `INSERT INTO Teachers (school_id, first_name, last_name, date_of_birth, email) VALUES (${school_id}, '${data.first_name}', '${data.last_name}', '${data.date_of_birth}', '${data.email}' )`;
+    db.pool.query(query1, function(error, rows, fields){
 
-        db.pool.query(queryUpdateName, [school_name, school], function(error, rows, fields){
-            if (error) {
-                console.log(error);
-                res.sendStatus(400);
-            }
-            else
-            {
-                db.pool.query(selectName, [school_name], function(error, rows, fields) {
-                    if (error) {
-                        console.log(error);
-                        res.sendStatus(400);
-                    } else {
-                        res.send(rows);
-                    }
-                })
-            }
-        })});
+        if (error) {
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else {
+            query2 = `SELECT * FROM Teachers;`;
+            db.pool.query(query2, function(error, rows, fields){
+
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                else {
+                    res.send(rows);
+                }
+            })
+        }
+    })
+});
 
 /*
     LISTENER

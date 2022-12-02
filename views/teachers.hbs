@@ -1,0 +1,65 @@
+<!-- teachers.hbs -->
+<h1>Los Santos School District</h1>
+<h2>Teachers</h2>
+
+<a href="/">Home</a> <a href="/schools.hbs">Schools</a> <a href="/teachers.hbs">Teachers</a> <a href="/students.hbs">Students</a> <a href="/classes.hbs">Classes</a> <a href="/students_classes.hbs">Students_Classes</a>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+{{!-- Create a table --}}
+<table id="teachers-table">
+
+    {{!-- Header section --}}
+    <thead>
+
+        {{!-- For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders --}}
+        <tr>
+            {{#each data.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+
+        {{!-- For each row, print the id, school_id, first_name, last_name, DoB, and email, in order --}}
+        {{#each data}}
+        <tr>
+            <td>{{this.teacher_id}}</td>
+            <td>{{this.school_id}}</td>
+            <td>{{this.first_name}}</td>
+            <td>{{this.last_name}}</td>
+            <td>{{this.date_of_birth}}</td>
+            <td>{{this.email}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+{{!-- Form to add a record to the table  --}}
+<h2>Adding Data with AJAX</h2>
+<p>To add a new teacher, please enter their information below and click 'Submit'!</p>
+<form id="add-teacher-form-ajax">
+    <label for="input-school_id">School: </label>
+    <input type="text" name="input-school_id" id="input-school_id">
+
+    <label for="input-first_name">First Name: </label>
+    <input type="text" name="input-first_name" id="input-first_name">
+
+    <label for="input-last_name">Last Name: </label>
+    <input type="text" name="input-last_name" id="input-last_name">
+
+    <label for="input-date_of_birth">Date of Birth: </label>
+    <input type="date" name="input-date_of_birth" id="input-date_of_birth">
+
+    <label for="input-email">Email: </label>
+    <input type="text" name="input-email" id="input-email">
+
+    <input type="submit">
+</form>
+
+{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+<script src="./js/add_teacher.js"></script>
