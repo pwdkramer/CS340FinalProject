@@ -112,11 +112,41 @@ app.delete('/delete-school-ajax', function(req,res,next)
 //Teachers
 app.get('/teachers.hbs', function(req, res)
     {  
-        let query1 = "SELECT * FROM Teachers;";                 // Define our query
+        let query1;                 // Define our query
+
+        if (req.query.last_name === undefined)
+        {
+            query1 = "SELECT * FROM Teachers;"; 
+        }
+        else
+        {
+            query1 = `SELECT * FROM Teachers WHERE last_name LIKE "${req.query.last_name}%"`;
+        }
+
+        let query2 = "SELECT * FROM Schools;";
 
         db.pool.query(query1, function(error, rows, fields){    // Execute the query
 
-            res.render('teachers', {data: rows});               // Render the teachers.hbs file, and also send the renderer
+            let teachers = rows;
+
+            db.pool.query(query2, (error, rows, fields) => {
+
+                let schools = rows;
+
+                let schoolmap = {}
+                schools.map(school => {
+                    let school_id = parseInt(school.school_id, 10);
+
+                    schoolmap[school_id] = school["school_name"];
+                })
+
+                teachers = teachers.map(teacher => {
+                    return Object.assign(teacher, {school_id: schoolmap[teacher.school_id]})
+                })
+
+                return res.render('teachers', {data: teachers, schools: schools});  
+            })
+
         })                                                      // an object where 'data' is equal to the 'rows' we
     });                                                         // received back from the query
 
