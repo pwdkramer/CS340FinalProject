@@ -29,6 +29,7 @@
                 {{@key}}
             </th>
             {{/each}}
+            <th>delete</th>
         </tr>
     </thead>
 
@@ -37,17 +38,19 @@
 
         {{!-- For each row, print the id, school_id, first_name, last_name, DoB, and email, in order --}}
         {{#each data}}
-        <tr>
+        <tr data-value={{this.teacher_id}}>
             <td>{{this.teacher_id}}</td>
             <td>{{this.school_id}}</td>
             <td>{{this.first_name}}</td>
             <td>{{this.last_name}}</td>
             <td>{{this.date_of_birth}}</td>
             <td>{{this.email}}</td>
+            <td><button onclick="deleteTeacher({{this.teacher_id}})">Delete</button></td>
         </tr>
         {{/each}}
     </tbody>
 </table>
+<script src="./js/delete_teacher.js"></script>
 
 {{!-- Form to add a record to the table  --}}
 <h2>Adding Data with AJAX</h2>

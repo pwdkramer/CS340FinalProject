@@ -185,6 +185,23 @@ app.post('/add-teacher-ajax', function(req, res)
     })
 });
 
+
+app.delete('/delete-teacher-ajax', function(req, res, next) {
+    let data = req.body;
+    let teacherID = parseInt(data.teacher_id);
+    let deleteTeachers = `DELETE FROM Teachers WHERE teacher_id = ?`;
+
+    db.pool.query(deleteTeachers, [teacherID], function(error, rows, fields) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        }
+        else {
+            res.sendStatus(204);
+        }
+    })
+});
+
 /*
     LISTENER
 */

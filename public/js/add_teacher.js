@@ -85,6 +85,8 @@ addRowToTable = (data) => {
     let dateOfBirthCell = document.createElement("TD");
     let emailCell = document.createElement("TD");
 
+    let deleteCell = document.createElement("TD");
+
     // Fill the cells with correct data
     teacherIdCell.innerText = newRow.teacher_id;
     schoolIdCell.innerText = newRow.school_id;
@@ -93,6 +95,12 @@ addRowToTable = (data) => {
     dateOfBirthCell.innerText = newRow.date_of_birth;
     emailCell.innerText = newRow.email;
 
+    deleteCell = document.createElement("button");
+    deleteCell.innerHTML = "Delete";
+    deleteCell.onclick = function(){
+        deleteTeacher(newRow.teacher_id);
+    }
+
     // Add the cells to the row 
     row.appendChild(teacherIdCell);
     row.appendChild(schoolIdCell);
@@ -100,6 +108,9 @@ addRowToTable = (data) => {
     row.appendChild(lastNameCell);
     row.appendChild(dateOfBirthCell);
     row.appendChild(emailCell);
+    row.appendChild(deleteCell);
+
+    row.setAttribute('data-value', newRow.teacher_id);
     
     // Add the row to the table
     currentTable.appendChild(row);
