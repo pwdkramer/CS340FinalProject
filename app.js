@@ -89,7 +89,7 @@ app.post('/add-school-ajax', function(req, res)
     });
 
 
-app.delete('/delete-school-ajax/', function(req,res,next)
+app.delete('/delete-school-ajax', function(req,res,next)
     {
     let data = req.body;
     let schoolID = parseInt(data.school_id);
@@ -104,6 +104,34 @@ app.delete('/delete-school-ajax/', function(req,res,next)
             else
             {
                 res.sendStatus(204);
+            }
+        })});
+
+
+app.put('/put-school-ajax', function(req,res,next){
+    let data = req.body;
+
+    let school = parseInt(data.currentname);
+    let school_name = parseInt(data.newname);
+
+    let queryUpdateName = `UPDATE Schools SET school_name = ? WHERE Schools.school_id = ?`;
+    let selectName = `SELECT * FROM Schools WHERE school_id = ?`;
+
+        db.pool.query(queryUpdateName, [school_name, school], function(error, rows, fields){
+            if (error) {
+                console.log(error);
+                res.sendStatus(400);
+            }
+            else
+            {
+                db.pool.query(selectName, [school_name], function(error, rows, fields) {
+                    if (error) {
+                        console.log(error);
+                        res.sendStatus(400);
+                    } else {
+                        res.send(rows);
+                    }
+                })
             }
         })});
 

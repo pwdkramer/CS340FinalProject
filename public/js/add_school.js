@@ -84,4 +84,10 @@ addRowToTable = (data) => {
     
     // Add the row to the table
     currentTable.appendChild(row);
+
+    let selectMenu = document.getElementById("mySelect");
+    let option = document.createElement("option");
+    option.text = newRow.school_name;
+    option.value = newRow.school_id;
+    selectMenu.add(option);
 }
