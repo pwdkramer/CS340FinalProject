@@ -1,24 +1,24 @@
-<!-- teachers.hbs -->
+<!-- students.hbs -->
 <h1>Los Santos School District</h1>
-<h2>Teachers</h2>
+<h2>Students</h2>
 
 <a href="/">Home</a> <a href="/schools.hbs">Schools</a> <a href="/teachers.hbs">Teachers</a> <a href="/students.hbs">Students</a> <a href="/classes.hbs">Classes</a> <a href="/students_classes.hbs">Students_Classes</a>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
 <h2>Search Using an HTML Form</h2>
 <p>Search by last name using the field below. Partial last names are OK too!</p>
-<form id="search-teacher-html" method='GET' action='/teachers.hbs'>
+<form id="search-student-html" method='GET' action='/students.hbs'>
     <label for="input-last_name">Search by Last Name: </label>
     <input type="text" name="last_name" id="input-last_name-html-search">
     
     <input type="submit">
-    <a href='/teachers.hbs'><button>Reset</button></a>
+    <a href='/students.hbs'><button>Reset</button></a>
 </form>
 
 <br><br><br>
 
 {{!-- Create a table --}}
-<table id="teachers-table">
+<table id="students-table">
 
     {{!-- Header section --}}
     <thead>
@@ -40,24 +40,24 @@
 
         {{!-- For each row, print the id, school_id, first_name, last_name, DoB, and email, in order --}}
         {{#each data}}
-        <tr data-value={{this.teacher_id}}>
-            <td>{{this.teacher_id}}</td>
+        <tr data-value={{this.student_id}}>
+            <td>{{this.student_id}}</td>
             <td>{{this.school_id}}</td>
             <td>{{this.first_name}}</td>
             <td>{{this.last_name}}</td>
             <td>{{this.date_of_birth}}</td>
             <td>{{this.email}}</td>
-            <td><button onclick="deleteTeacher({{this.teacher_id}})">Delete</button></td>
+            <td><button onclick="deleteStudent({{this.student_id}})">Delete</button></td>
         </tr>
         {{/each}}
     </tbody>
 </table>
-<script src="./js/delete_teacher.js"></script>
+<script src="./js/delete_student.js"></script>
 
 {{!-- Form to add a record to the table  --}}
 <h2>Adding Data with AJAX</h2>
-<p>To add a new teacher, please enter their information below and click 'Submit'!</p>
-<form id="add-teacher-form-ajax">
+<p>To add a new student, please enter their information below and click 'Submit'!</p>
+<form id="add-student-form-ajax">
 
     <select name="input-school_id" id="input-school_id">
     <option value="">Select a School</option>
@@ -82,18 +82,18 @@
 </form>
 
 {{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
-<script src="./js/add_teacher.js"></script>
+<script src="./js/add_student.js"></script>
 
 
-<h2>Updating A Teacher's School Form</h2>
-<p>To update a specific teacher's school select their name from the drop-down menu on the left and their desired school from the drop down menu on the right</p>
-<form id="update-teacher-form-ajax">
+<h2>Updating A Student's School Form</h2>
+<p>To update a specific student's school select their name from the drop-down menu on the left and their desired school from the drop down menu on the right</p>
+<form id="update-student-form-ajax">
 
     <label for="input-fullname">Full name: </label>
     <select name="input-fullname" id="mySelect">
         <option value="test">Select a Person</option>
         {{#each data}}
-        <option value="{{this.teacher_id}}">{{this.first_name}} {{this.last_name}}</option>
+        <option value="{{this.student_id}}">{{this.first_name}} {{this.last_name}}</option>
         {{/each}}
     </select>
 
@@ -108,4 +108,4 @@
 
 </form>
 
-<script src="./js/update_teacher.js"></script>
+<script src="./js/update_student.js"></script>

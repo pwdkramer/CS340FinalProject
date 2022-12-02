@@ -1,8 +1,8 @@
 // Get the objects we need to modify
-let addTeacherForm = document.getElementById('add-teacher-form-ajax');
+let addStudentForm = document.getElementById('add-student-form-ajax');
 
 // Modify the objects we need
-addTeacherForm.addEventListener("submit", function (e) {
+addStudentForm.addEventListener("submit", function (e) {
     
     // Prevent the form from submitting
     e.preventDefault();
@@ -32,7 +32,7 @@ addTeacherForm.addEventListener("submit", function (e) {
     
     // Setup our AJAX request
     var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "/add-teacher-ajax", true);
+    xhttp.open("POST", "/add-student-ajax", true);
     xhttp.setRequestHeader("Content-type", "application/json");
 
     // Tell our AJAX request how to resolve
@@ -63,11 +63,11 @@ addTeacherForm.addEventListener("submit", function (e) {
 
 
 // Creates a single row from an Object representing a single record from 
-// Teachers
+// Students
 addRowToTable = (data) => {
 
     // Get a reference to the current table on the page and clear it out.
-    let currentTable = document.getElementById("teachers-table");
+    let currentTable = document.getElementById("students-table");
 
     // Get the location where we should insert the new row (end of table)
     let newRowIndex = currentTable.rows.length;
@@ -78,7 +78,7 @@ addRowToTable = (data) => {
 
     // Create a row and 4 cells
     let row = document.createElement("TR");
-    let teacherIdCell = document.createElement("TD");
+    let studentIdCell = document.createElement("TD");
     let schoolIdCell = document.createElement("TD");
     let firstNameCell = document.createElement("TD");
     let lastNameCell = document.createElement("TD");
@@ -88,7 +88,7 @@ addRowToTable = (data) => {
     let deleteCell = document.createElement("TD");
 
     // Fill the cells with correct data
-    teacherIdCell.innerText = newRow.teacher_id;
+    studentIdCell.innerText = newRow.student_id;
     schoolIdCell.innerText = newRow.school_id;
     firstNameCell.innerText = newRow.first_name;
     lastNameCell.innerText = newRow.last_name;
@@ -98,11 +98,11 @@ addRowToTable = (data) => {
     deleteCell = document.createElement("button");
     deleteCell.innerHTML = "Delete";
     deleteCell.onclick = function(){
-        deleteTeacher(newRow.teacher_id);
+        deleteStudent(newRow.student_id);
     }
 
     // Add the cells to the row 
-    row.appendChild(teacherIdCell);
+    row.appendChild(studentIdCell);
     row.appendChild(schoolIdCell);
     row.appendChild(firstNameCell);
     row.appendChild(lastNameCell);
@@ -110,7 +110,7 @@ addRowToTable = (data) => {
     row.appendChild(emailCell);
     row.appendChild(deleteCell);
 
-    row.setAttribute('data-value', newRow.teacher_id);
+    row.setAttribute('data-value', newRow.student_id);
     
     // Add the row to the table
     currentTable.appendChild(row);
@@ -118,6 +118,6 @@ addRowToTable = (data) => {
     let selectMenu = document.getElementById("mySelect");
     let option = document.createElement("option");
     option.text = newRow.first_name + ' ' + newRow.last_name;
-    option.value = newRow.teacher_id;
+    option.value = newRow.student_id;
     selectMenu.add(option);
 }

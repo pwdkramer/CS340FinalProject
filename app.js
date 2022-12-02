@@ -231,6 +231,130 @@ app.put('/put-teacher-ajax', function(req, res, next){
     })
 });
 
+
+//Students
+app.get('/students.hbs', function(req, res)
+    {  
+        let query1;                 // Define our query
+
+        if (req.query.last_name === undefined)
+        {
+            query1 = "SELECT * FROM Students;"; 
+        }
+        else
+        {
+            query1 = `SELECT * FROM Students WHERE last_name LIKE "${req.query.last_name}%"`;
+        }
+
+        let query2 = "SELECT * FROM Schools;";
+
+        db.pool.query(query1, function(error, rows, fields){    // Execute the query
+
+            let students = rows;
+
+            db.pool.query(query2, (error, rows, fields) => {
+
+                let schools = rows;
+
+                let schoolmap = {}
+                schools.map(school => {
+                    let school_id = parseInt(school.school_id, 10);
+
+                    schoolmap[school_id] = school["school_name"];
+                })
+
+                students = students.map(student => {
+                    return Object.assign(student, {school_id: schoolmap[student.school_id]})
+                })
+
+                return res.render('students', {data: students, schools: schools});  
+            })
+
+        })                                                      // an object where 'data' is equal to the 'rows' we
+    });                                                         // received back from the query
+
+
+app.post('/add-student-ajax', function(req, res)
+{
+    let data = req.body;
+
+    //Capture NULL values
+    let school_id = parseInt(data.school_id);
+    if (isNaN(school_id))
+    {
+        school_id = 'NULL'
+    }
+
+    query1 = `INSERT INTO Students (school_id, first_name, last_name, date_of_birth, email) VALUES (${school_id}, '${data.first_name}', '${data.last_name}', '${data.date_of_birth}', '${data.email}' )`;
+    db.pool.query(query1, function(error, rows, fields){
+
+        if (error) {
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else {
+            query2 = `SELECT * FROM Students;`;
+            db.pool.query(query2, function(error, rows, fields){
+
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                else {
+                    res.send(rows);
+                }
+            })
+        }
+    })
+});
+
+
+app.delete('/delete-student-ajax', function(req, res, next) {
+    let data = req.body;
+    let studentID = parseInt(data.student_id);
+    let deleteStudents = `DELETE FROM Students WHERE student_id = ?`;
+
+    db.pool.query(deleteStudents, [studentID], function(error, rows, fields) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        }
+        else {
+            res.sendStatus(204);
+        }
+    })
+});
+
+
+app.put('/put-student-ajax', function(req, res, next){
+    let data = req.body;
+
+    let school_id = parseInt(data.school_id);
+    let student = parseInt(data.fullname);
+
+    let queryUpdateSchool = `UPDATE Students SET school_id = ? WHERE Students.student_id = ?`;
+    let selectSchool = `SELECT * FROM Schools WHERE school_id = ?`;
+
+    db.pool.query(queryUpdateSchool, [school_id, student], function(error, rows, fields){
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        }
+        else {
+            db.pool.query(selectSchool, [school_id], function(error, rows, fields) {
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                else {
+                    res.send(rows);
+                }
+            })
+        }
+    })
+});
+
+
 /*
     LISTENER
 */
