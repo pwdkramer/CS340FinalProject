@@ -81,3 +81,29 @@
 
 {{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
 <script src="./js/add_teacher.js"></script>
+
+
+<h2>Updating A Teacher's School Form</h2>
+<p>To update a specific teacher's school select their name from the drop-down menu on the left and their desired school from the drop down menu on the right</p>
+<form id="update-teacher-form-ajax">
+
+    <label for="input-fullname">Full name: </label>
+    <select name="input-fullname" id="mySelect">
+        <option value="test">Select a Person</option>
+        {{#each data}}
+        <option value="{{this.teacher_id}}">{{this.first_name}} {{this.last_name}}</option>
+        {{/each}}
+    </select>
+
+    <label for="input-school_id">School: </label>
+    <select name="input-school_id" id="input-school_id-update">
+        <option>Select a School</option>
+        {{#each schools}}
+        <option value="{{this.school_id}}">{{this.school_name}}</option>
+        {{/each}}
+    </select>
+    <input type="submit">
+
+</form>
+
+<script src="./js/update_teacher.js"></script>

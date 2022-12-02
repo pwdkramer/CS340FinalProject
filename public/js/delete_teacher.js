@@ -20,7 +20,19 @@ function deleteTeacher(teacherID) {
       for (let i = 0, row; row = table.rows[i]; i++) {
          if (table.rows[i].getAttribute("data-value") == teacherID) {
               table.deleteRow(i);
+              deleteDropDownMenu(teacherID);
               break;
          }
       }
+  }
+
+  function deleteDropDownMenu(teacherID){
+    let selectMenu = document.getElementById("mySelect");
+    for (let i = 0; i < selectMenu.length; i++){
+      if (Number(selectMenu.options[i].value) === Number(teacherID)){
+        selectMenu[i].remove();
+        break;
+      } 
+  
+    }
   }
