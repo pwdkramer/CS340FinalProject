@@ -472,6 +472,94 @@ app.put('/put-class-ajax', function(req, res, next) {
     })
 });
 
+
+// Students_Classes
+
+app.get('/students_classes.hbs', function(req, res)
+{
+    let query1;
+
+    if (req.query.class_name === undefined)
+    {
+        if (req.query.last_name === undefined)
+        {
+            query1 = "SELECT * FROM Students_Classes;";
+        }
+        else
+        {
+            query1 = `SELECT Students_Classes.class_id, Students_Classes.student_id FROM Students_Classes INNER JOIN Students WHERE Students_Classes.student_id = Students.student_id AND Students.last_name LIKE "${req.query.last_name}%"`;
+        }
+    }
+    else
+    {
+        query1 = `SELECT Students_Classes.class_id, Students_Classes.student_id FROM Students_Classes INNER JOIN Classes WHERE Students_Classes.class_id = Classes.class_id AND Classes.class_name LIKE "${req.query.class_name}%"`;
+    }
+
+    let query2 = "SELECT * FROM Classes;";
+
+    let query3 = "SELECT * FROM Students;";
+
+    db.pool.query(query1, function(error, rows, fields) {
+
+        let students_classes = rows;
+
+        db.pool.query(query2, (error, rows, fields) => {
+
+            let classes = rows;
+
+            db.pool.query(query3, (error, rows, fields) => {
+
+                let students = rows;
+
+                return res.render('students_classes', {data: students_classes, classes: classes, students: students});
+
+            })
+        })
+    })
+});
+
+
+app.post('/add-student_class-ajax', function(req, res) {
+    let data = req.body;
+
+    query1 = `INSERT INTO Students_Classes (class_id, student_id) VALUES ('${data.class_id}', '${data.student_id}')`;
+    db.pool.query(query1, function(error, rows, fields){
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        }
+        else {
+            query2 = `SELECT * FROM Students_Classes;`;
+            db.pool.query(query2, function(error, rows, fields) {
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                else {
+                    res.send(rows);
+                }
+            })
+        }
+    })
+});
+
+
+app.delete('/delete-student_class-ajax', function(req, res, next) {
+    let data = req.body;
+    let classID = parseInt(data.class_id);
+    let studentID = parseInt(data.student_id);
+    let deleteStudents_Classes = `DELETE FROM Students_Classes WHERE class_id = ? AND student_id = ?`;
+
+    db.pool.query(deleteStudents_Classes, [classID, studentID], function(error, rows, fields) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        } else {
+            res.sendStatus(204);
+        }
+    })
+});
+
 /*
     LISTENER
 */
