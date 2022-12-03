@@ -78,3 +78,28 @@
 
 {{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
 <script src="./js/add_class.js"></script>
+
+<h2>Updating A Class's Teacher Form</h2>
+<p>To update a specific class's teacher select the class name from the drop-down menu on the left and the new desired teacher from the drop down menu on the right</p>
+<form id="update-class-form-ajax">
+
+    <label for="input-class_name">Class Name: </label>
+    <select name="input-class_name" id="mySelect">
+        <option value="test">Select a Class</option>
+        {{#each data}}
+        <option value="{{this.class_id}}">{{this.class_name}} {{this.class_section}}</option>
+        {{/each}}
+    </select>
+
+    <label for="input-teacher_id">Teacher: </label>
+    <select name="input-teacher_id" id="input-teacher_id-update">
+        <option>Select a Teacher</option>
+        {{#each teachers}}
+        <option value="{{this.teacher_id}}">{{this.first_name}} {{this.last_name}}</option>
+        {{/each}}
+    </select>
+    <input type="submit">
+
+</form>
+
+<script src="./js/update_class.js"></script>

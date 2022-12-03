@@ -444,6 +444,34 @@ app.delete('/delete-class-ajax', function(req, res, next) {
     })
 });
 
+
+app.put('/put-class-ajax', function(req, res, next) {
+    let data = req.body;
+
+    let teacher_id = parseInt(data.teacher_id);
+    let aclass = parseInt(data.classname);
+
+    let queryUpdateTeacher = `UPDATE Classes SET teacher_id = ? WHERE Classes.class_id = ?`;
+    let selectTeacher = `SELECT * FROM Teachers WHERE teacher_id = ?`;
+
+    db.pool.query(queryUpdateTeacher, [teacher_id, aclass], function(error, rows, fields) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        }
+        else {
+            db.pool.query(selectTeacher, [teacher_id], function(error, rows, fields) {
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                } else {
+                    res.send(rows);
+                }
+            })
+        }
+    })
+});
+
 /*
     LISTENER
 */
