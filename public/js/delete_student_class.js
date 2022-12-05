@@ -1,3 +1,9 @@
+/*
+    Citation for the following page:
+    Date: 12/5/22
+    Adapted from:
+    Source URL: https://github.com/osu-cs340-ecampus/nodejs-starter-app
+*/
 function deleteStudentClass(classID, studentID) {
     let link = '/delete-student_class-ajax/';
     let data = {

@@ -1,3 +1,9 @@
+/*
+    Citation for the following page:
+    Date: 12/5/22
+    Adapted from:
+    Source URL: https://github.com/osu-cs340-ecampus/nodejs-starter-app
+*/
 // Get the objects we need to modify
 let addSchoolForm = document.getElementById('add-school-form-ajax');
 
