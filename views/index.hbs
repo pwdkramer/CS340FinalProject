@@ -5,22 +5,51 @@
     Adapted from:
     Source URL: https://github.com/osu-cs340-ecampus/nodejs-starter-app
 }}
-<h1>Los Santos School District</h1>
+<header>
+    <h1>Welcome to the Los Santos School Disctict Home Page</h1>
+    <link rel='stylesheet' href='home.css'/>
+</header>
 
-<h1>INDEX PAGE (Group 115)</h1>
+<ul>
+    <li><a class='active' href="/">Home</a> </li>
+    <li><a href="/schools.hbs">Schools</a> </li>
+    <li><a href="/teachers.hbs">Teachers</a> </li>
+    <li><a href="/students.hbs">Students</a></li>
+    <li><a href="/classes.hbs">Classes</a></li>
+    <li><a href="/students_classes.hbs">Students_Classes</a></li>
+</ul>
+
+<div class="row">
+    <img src="Campus.jpg" style="width:550px;height:350px;">
+    <img src="Schools.jpg" style="width:550px;height:350px;">
+    <img src="student.jpg" style="width:550px;height:350px;">
+</div>
+
+<div class="content">
+<h2>Los Santos Mission:</h2>
+<p>Los Santos has recently had increasing demands on information to be kept. With multiple schools each with hundreds of staff and thousands of students, 
+    a well-maintained database can help administrative staff with organization and productivity. 
+    Los Santos School District has 12 schools, 1200 teachers, and 15,000 students. 
+    Previously, each school had its own internal database. Our database will keep track of which teachers and 
+    schools teach at or attend each school, as well as which classes teachers teach and students are registered for. 
+    It will also allow easier transitioning for students/staff who switch schools between school years. Check out more information on the schools, students, and staff below!</p>
+</div>
+
+<br><br><br>
 
 <h2><a href="schools.hbs">Schools Page</a></h2>
-    <p>This page allows user to browse the schools, add new schools, 
-        update current schools, or delete schools</p>
+    <p>This page allows user to browse the schools, add a new school to the database, or delete a school from the database.</p>
 
 <h2><a href="teachers.hbs">Teachers Page</a></h2>
-    <p>View list of teachers, add or delete teachers, or change a teacher's school</p>
+    <p>The Teachers page allows users to view a list of teachers, add and delete teachers, or change a teacher's current school</p>
 
 <h2><a href="students.hbs">Students Page</a></h2>
-    <p>View list of students, add or delete students, or change a student's school</p>
+    <p>The Students page allows users to view a list of students, add and delete students, or change a student's current school.</p>
 
 <h2><a href="classes.hbs">Classes Page</a></h2>
-    <p>View list of classes, add or delete classes, or change a class's teacher</p>
+    <p>The Clsses page allows users to view a list of classes, add and delete classes, or update a classes teacher.</p>
 
 <h2><a href="students_classes.hbs">Students_Classes Page</a></h2>
-    <p>View what students are taking what classes, add or delete student-class relationship</p>
+    <p>The Student_Classes page allows users to view list of student-classes relationships and add or delete a student-class relationship.</p>
+
+<br><br><br><br>

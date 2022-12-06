@@ -5,108 +5,133 @@
     Adapted from:
     Source URL: https://github.com/osu-cs340-ecampus/nodejs-starter-app
 }}
-<h1>Los Santos School District</h1>
-<h2>Classes</h2>
+<header>
+    <img src="School.jpg" class="img">
+    <h1>Los Santos <br> School District</h1>
+    <link href='style.css' rel='stylesheet'/>
+</header>
 
-<a href="/">Home</a> <a href="/schools.hbs">Schools</a> <a href="/teachers.hbs">Teachers</a> <a href="/students.hbs">Students</a> <a href="/classes.hbs">Classes</a> <a href="/students_classes.hbs">Students_Classes</a>
+
+
+<ul>
+    <li><a href="/">Home</a> </li>
+    <li><a href="/schools.hbs">Schools</a> </li>
+    <li><a href="/teachers.hbs">Teachers</a> </li>
+    <li><a href="/students.hbs">Students</a></li>
+    <li><a class='active' href="/classes.hbs">Classes</a></li>
+    <li><a href="/students_classes.hbs">Students_Classes</a></li>
+</ul>
+
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
-<h2>Search Using an HTML Form</h2>
-<p>Search by class name using the field below. Partial class names are OK too!</p>
-<form id="search-class-html" method='GET' action='/classes.hbs'>
-    <label for="input-class_name">Search by Class Name: </label>
-    <input type="text" name="class_name" id="input-class_name-html-search">
-    
-    <input type="submit">
-    <a href='/classes.hbs'><button>Reset</button></a>
-</form>
+<div class="underHeader">
+    <h2>Welcome to the Classes page.</h2>
+    <h4>Find all the classes available in the Los Santos School Disctrict below!</h4>
+</div>
 
-<br><br><br>
+<br><br><br><br>
 
-{{!-- Create a table --}}
-<table id="classes-table">
+<body>
+    <form id="search-class-html" method='GET' action='/classes.hbs' class="form-inline">
+        <legend align="left"><strong>Search for a Class:</strong></legend>
+        <input placeholder='search' type="text" name="class_name" id="input-class_name-html-search">
+        
+        <button type="submit">Submit</button>
+        <a href='/classes.hbs'><button>Reset</button></a>
+    </form>
 
-    {{!-- Header section --}}
-    <thead>
+    <br>
 
-        {{!-- For just the first row, we print each key of the row object as a header cell so we
-        know what each column means when the page renders --}}
-        <tr>
-            {{#each data.[0]}}
-            <th>
-                {{@key}}
-            </th>
+    {{!-- Create a table --}}
+    <table id="classes-table" border="1" cellpadding="5">
+
+        {{!-- Header section --}}
+        <thead>
+
+            {{!-- For just the first row, we print each key of the row object as a header cell so we
+            know what each column means when the page renders --}}
+            <tr>
+                {{#each data.[0]}}
+                <th>
+                    {{@key}}
+                </th>
+                {{/each}}
+                <th>delete</th>
+            </tr>
+        </thead>
+
+        {{!-- Body section --}}
+        <tbody>
+
+            {{!-- For each row, print the class_id, teacher_id, class_name, class_section, and max_students, in order --}}
+            {{#each data}}
+            <tr data-value={{this.class_id}}>
+                <td>{{this.class_id}}</td>
+                <td>{{this.teacher_id}}</td>
+                <td>{{this.class_name}}</td>
+                <td>{{this.class_section}}</td>
+                <td>{{this.max_students}}</td>
+                <td><button onclick="deleteClass({{this.class_id}})">Delete</button></td>
+            </tr>
             {{/each}}
-            <th>delete</th>
-        </tr>
-    </thead>
+        </tbody>
+    </table>
+    <script src="./js/delete_class.js"></script>
 
-    {{!-- Body section --}}
-    <tbody>
-
-        {{!-- For each row, print the class_id, teacher_id, class_name, class_section, and max_students, in order --}}
-        {{#each data}}
-        <tr data-value={{this.class_id}}>
-            <td>{{this.class_id}}</td>
-            <td>{{this.teacher_id}}</td>
-            <td>{{this.class_name}}</td>
-            <td>{{this.class_section}}</td>
-            <td>{{this.max_students}}</td>
-            <td><button onclick="deleteClass({{this.class_id}})">Delete</button></td>
-        </tr>
-        {{/each}}
-    </tbody>
-</table>
-<script src="./js/delete_class.js"></script>
-
-{{!-- Form to add a record to the table  --}}
-<h2>Adding Data with AJAX</h2>
-<p>To add a new class, please enter the information below and click 'Submit'!</p>
-<form id="add-class-form-ajax">
-    <select name="input-teacher_id" id="input-teacher_id-ajax">
-        <option value="">Select a Teacher</option>
-        {{#each teachers}}
-        <option value="{{this.teacher_id}}">{{this.first_name}} {{this.last_name}}</option>
-        {{/each}}
-    </select>
+    <br>
     
-    <label for="input-class_name">Class Name: </label>
-    <input type="text" name="input-class_name" id="input-class_name">
+    {{!-- Form to add a record to the table  --}}
+    <form id="add-class-form-ajax" class="form-inline">
+        <fieldset>
+            <legend align="left"><strong>Add New Class:</strong></legend>
+            <select name="input-teacher_id" id="input-teacher_id-ajax">
+                <option value="">Select a Teacher</option>
+                {{#each teachers}}
+                <option value="{{this.teacher_id}}">{{this.first_name}} {{this.last_name}}</option>
+                {{/each}}
+            </select>
+            
+            <label for="input-class_name">Class Name: </label>
+            <input type="text" name="input-class_name" id="input-class_name">
 
-    <label for="input-class_section">Section Number: </label>
-    <input type="number" name="input-class_section" id="input-class_section">
+            <label for="input-class_section">Section Number: </label>
+            <input type="number" name="input-class_section" id="input-class_section">
 
-    <label for="input-max_students">Max Students: </label>
-    <input type="number" name="input-max_students" id="input-max_students">
+            <label for="input-max_students">Max Students: </label>
+            <input type="number" name="input-max_students" id="input-max_students">
+            <button type="submit">Submit</button>    
+        </fieldset>
+    </form>
 
-    <input type="submit">
-</form>
+    {{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+    <script src="./js/add_class.js"></script>
 
-{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
-<script src="./js/add_class.js"></script>
+    <br><br>
 
-<h2>Updating A Class's Teacher Form</h2>
-<p>To update a specific class's teacher select the class name from the drop-down menu on the left and the new desired teacher from the drop down menu on the right</p>
-<form id="update-class-form-ajax">
+    <form id="update-class-form-ajax" class="form-inline">
+        <fieldset>
+            <legend align="left"><strong>Update Class Info:</strong></legend>
+            <label for="input-class_name">Class Name: </label>
+            <select name="input-class_name" id="mySelect">
+                <option value="test">Select a Class</option>
+                {{#each data}}
+                <option value="{{this.class_id}}">{{this.class_name}} {{this.class_section}}</option>
+                {{/each}}
+            </select>
 
-    <label for="input-class_name">Class Name: </label>
-    <select name="input-class_name" id="mySelect">
-        <option value="test">Select a Class</option>
-        {{#each data}}
-        <option value="{{this.class_id}}">{{this.class_name}} {{this.class_section}}</option>
-        {{/each}}
-    </select>
+            <label for="input-teacher_id">Teacher: </label>
+            <select name="input-teacher_id" id="input-teacher_id-update">
+                <option>Select a Teacher</option>
+                {{#each teachers}}
+                <option value="{{this.teacher_id}}">{{this.first_name}} {{this.last_name}}</option>
+                {{/each}}
+                <option value=''>REMOVE</option>
+            </select>
+            <button type="submit">Submit</button>
+        </fieldset>
 
-    <label for="input-teacher_id">Teacher: </label>
-    <select name="input-teacher_id" id="input-teacher_id-update">
-        <option>Select a Teacher</option>
-        {{#each teachers}}
-        <option value="{{this.teacher_id}}">{{this.first_name}} {{this.last_name}}</option>
-        {{/each}}
-        <option value=''>REMOVE</option>
-    </select>
-    <input type="submit">
-
-</form>
+    </form>
+</body>
+<br><br>
 
 <script src="./js/update_class.js"></script>

@@ -5,114 +5,135 @@
     Adapted from:
     Source URL: https://github.com/osu-cs340-ecampus/nodejs-starter-app
 }}
-<h1>Los Santos School District</h1>
-<h2>Teachers</h2>
+<header>
+    <img src="School.jpg" class="img">
+    <h1>Los Santos <br> School District</h1>
+    <link href='style.css' rel='stylesheet'/>
+</header>
 
-<a href="/">Home</a> <a href="/schools.hbs">Schools</a> <a href="/teachers.hbs">Teachers</a> <a href="/students.hbs">Students</a> <a href="/classes.hbs">Classes</a> <a href="/students_classes.hbs">Students_Classes</a>
+
+
+<ul>
+    <li><a href="/">Home</a> </li>
+    <li><a href="/schools.hbs">Schools</a> </li>
+    <li><a class='active' href="/teachers.hbs">Teachers</a> </li>
+    <li><a href="/students.hbs">Students</a></li>
+    <li><a href="/classes.hbs">Classes</a></li>
+    <li><a href="/students_classes.hbs">Students_Classes</a></li>
+</ul>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
-<h2>Search Using an HTML Form</h2>
-<p>Search by last name using the field below. Partial last names are OK too!</p>
-<form id="search-teacher-html" method='GET' action='/teachers.hbs'>
-    <label for="input-last_name">Search by Last Name: </label>
-    <input type="text" name="last_name" id="input-last_name-html-search">
-    
-    <input type="submit">
-    <a href='/teachers.hbs'><button>Reset</button></a>
-</form>
+<div class="underHeader">
+    <h2>Welcome to the Teachers Information page.</h2>
+    <h4>Find all the Teachers information that are part of the Los Santos School Disctrict below!</h4>
+</div>
 
-<br><br><br>
+<br><br><br><br>
 
-{{!-- Create a table --}}
-<table id="teachers-table">
+<body>
+    <form id="search-teacher-html" method='GET' action='/teachers.hbs' class="form-inline">
+        <label for="input-last_name">Search for Teacher by Last Name: </label>
+        <input placeholder='search' type="text" name="last_name" id="input-last_name-html-search">
+        
+        <button type="submit">Submit</button>
+        <a href='/teachers.hbs'><button>Reset</button></a>
+    </form>
 
-    {{!-- Header section --}}
-    <thead>
+    <br>
 
-        {{!-- For just the first row, we print each key of the row object as a header cell so we
-        know what each column means when the page renders --}}
-        <tr>
-            {{#each data.[0]}}
-            <th>
-                {{@key}}
-            </th>
+    {{!-- Create a table --}}
+    <table id="teachers-table" border="1" cellpadding="5">
+
+        {{!-- Header section --}}
+        <thead>
+
+            {{!-- For just the first row, we print each key of the row object as a header cell so we
+            know what each column means when the page renders --}}
+            <tr>
+                {{#each data.[0]}}
+                <th>
+                    {{@key}}
+                </th>
+                {{/each}}
+                <th>delete</th>
+            </tr>
+        </thead>
+
+        {{!-- Body section --}}
+        <tbody>
+
+            {{!-- For each row, print the id, school_id, first_name, last_name, DoB, and email, in order --}}
+            {{#each data}}
+            <tr data-value={{this.teacher_id}}>
+                <td>{{this.teacher_id}}</td>
+                <td>{{this.school_id}}</td>
+                <td>{{this.first_name}}</td>
+                <td>{{this.last_name}}</td>
+                <td>{{this.date_of_birth}}</td>
+                <td>{{this.email}}</td>
+                <td><button onclick="deleteTeacher({{this.teacher_id}})">Delete</button></td>
+            </tr>
             {{/each}}
-            <th>delete</th>
-        </tr>
-    </thead>
+        </tbody>
+    </table>
+    <script src="./js/delete_teacher.js"></script>
 
-    {{!-- Body section --}}
-    <tbody>
+    <br>
 
-        {{!-- For each row, print the id, school_id, first_name, last_name, DoB, and email, in order --}}
-        {{#each data}}
-        <tr data-value={{this.teacher_id}}>
-            <td>{{this.teacher_id}}</td>
-            <td>{{this.school_id}}</td>
-            <td>{{this.first_name}}</td>
-            <td>{{this.last_name}}</td>
-            <td>{{this.date_of_birth}}</td>
-            <td>{{this.email}}</td>
-            <td><button onclick="deleteTeacher({{this.teacher_id}})">Delete</button></td>
-        </tr>
-        {{/each}}
-    </tbody>
-</table>
-<script src="./js/delete_teacher.js"></script>
+    {{!-- Form to add a record to the table  --}}
+    <form id="add-teacher-form-ajax" class="form-inline">
+        <fieldset>
+            <legend align="left"><strong>Add New Teacher:</strong></legend>
+            <select name="input-school_id" id="input-school_id">
+            <option value="">Select a School</option>
+            {{#each schools}}
+            <option value="{{this.school_id}}">{{this.school_name}}</option>
+            {{/each}}
+            </select>
 
-{{!-- Form to add a record to the table  --}}
-<h2>Adding Data with AJAX</h2>
-<p>To add a new teacher, please enter their information below and click 'Submit'!</p>
-<form id="add-teacher-form-ajax">
+            <label for="input-first_name">First Name: </label>
+            <input type="text" name="input-first_name" id="input-first_name">
 
-    <select name="input-school_id" id="input-school_id">
-    <option value="">Select a School</option>
-    {{#each schools}}
-    <option value="{{this.school_id}}">{{this.school_name}}</option>
-    {{/each}}
-    </select>
+            <label for="input-last_name">Last Name: </label>
+            <input type="text" name="input-last_name" id="input-last_name">
 
-    <label for="input-first_name">First Name: </label>
-    <input type="text" name="input-first_name" id="input-first_name">
+            <label for="input-date_of_birth">Date of Birth: </label>
+            <input type="date" name="input-date_of_birth" id="input-date_of_birth">
 
-    <label for="input-last_name">Last Name: </label>
-    <input type="text" name="input-last_name" id="input-last_name">
+            <label for="input-email">Email: </label>
+            <input type="text" name="input-email" id="input-email">
 
-    <label for="input-date_of_birth">Date of Birth: </label>
-    <input type="date" name="input-date_of_birth" id="input-date_of_birth">
+            <button type="submit">Submit</button>
+        </fieldset>
+    </form>
 
-    <label for="input-email">Email: </label>
-    <input type="text" name="input-email" id="input-email">
+    {{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+    <script src="./js/add_teacher.js"></script>
 
-    <input type="submit">
-</form>
+    <br><br>
 
-{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
-<script src="./js/add_teacher.js"></script>
+    <form id="update-teacher-form-ajax" class="form-inline">
+        <fieldset>
+            <legend align="left"><strong>Update Teacher's Current School:</strong></legend>
+            <label for="input-fullname">Teacher: </label>
+            <select name="input-fullname" id="mySelect">
+                <option value="test">Select a Person</option>
+                {{#each data}}
+                <option value="{{this.teacher_id}}">{{this.first_name}} {{this.last_name}}</option>
+                {{/each}}
+            </select>
 
-
-<h2>Updating A Teacher's School Form</h2>
-<p>To update a specific teacher's school select their name from the drop-down menu on the left and their desired school from the drop down menu on the right</p>
-<form id="update-teacher-form-ajax">
-
-    <label for="input-fullname">Full name: </label>
-    <select name="input-fullname" id="mySelect">
-        <option value="test">Select a Person</option>
-        {{#each data}}
-        <option value="{{this.teacher_id}}">{{this.first_name}} {{this.last_name}}</option>
-        {{/each}}
-    </select>
-
-    <label for="input-school_id">School: </label>
-    <select name="input-school_id" id="input-school_id-update">
-        <option>Select a School</option>
-        {{#each schools}}
-        <option value="{{this.school_id}}">{{this.school_name}}</option>
-        {{/each}}
-        <option value=''>REMOVE</option>
-    </select>
-    <input type="submit">
-
-</form>
-
+            <label for="input-school_id">School: </label>
+            <select name="input-school_id" id="input-school_id-update">
+                <option>Select a School</option>
+                {{#each schools}}
+                <option value="{{this.school_id}}">{{this.school_name}}</option>
+                {{/each}}
+                <option value=''>REMOVE</option>
+            </select>
+            <button type="submit">Submit</button>
+        </fieldset>
+    </form>
+</body>
+<br><br>
 <script src="./js/update_teacher.js"></script>

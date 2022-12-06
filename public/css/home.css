@@ -1,0 +1,114 @@
+
+*{
+    margin: 0px;
+  }
+  
+  body {       /* Can alternatively define in html {} or :root {} */
+    color:black;
+    background-color:white;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size:calc(10px + 2vmin);
+    text-align: center;
+    margin: 0px;
+    display: inline;
+  }
+  
+  
+  .content{
+    justify-content: left;
+    height: 18vh;
+    margin: 0px;
+    display:block;
+    position: relative;
+    text-align: center;
+    margin: 5% 10%;
+  }
+  
+  
+  /*  ----- Nav Bar -----  */
+  
+  ul {
+    list-style-type: none;
+    overflow: hidden;
+    background-color: #333;
+    position: sticky;
+    top: 0;
+  }
+  
+  li {
+    float: left;
+  }
+  
+  li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  
+  .active {
+    background-color: #04AA6D;
+  }
+  
+  li a:hover {
+    background-color: #111;
+  }
+  
+  
+  /*  ----- Page layout blocks -----  */
+  header, footer {
+    border: none;
+    font-size:x-large ;
+    background-size:cover;
+    height:300px;
+    margin: 0;
+    padding-right: 10%;
+    padding-left: 10%;
+    padding-top: 2%;
+  }
+  header{
+    text-align: center;
+  }
+  
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 4px;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  
+  
+  /*remove headers not being used*/
+  h1 {
+    flex-direction: column;
+    align-items:center;
+    justify-content: center;
+    font-size: calc(70px + 2vmin);
+    color: green;
+    text-decoration: underline;
+    font-family: cursive;
+    font-weight:500;
+  }
+  
+  h2 {
+    justify-content: left;
+    padding-left: 2%;
+    padding-right: 2%;
+    padding-top: 2%;
+  }
+  
+  h3 {
+    justify-content: left;
+    padding-left: 2%;
+    padding-right: 2%;
+    text-decoration: underline;
+  }
+  
+  h4 {
+    justify-content: left;
+    padding-left: 2%;
+    padding-right: 2%;
+  }

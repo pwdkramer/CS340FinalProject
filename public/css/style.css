@@ -1,0 +1,213 @@
+/*
+    Citation for the following function: form-inline
+    Date: 12/05/2022
+    Adopted from: W3Schools
+    Source URL: https://www.w3schools.com/howto/howto_css_inline_form.asp
+*/
+
+
+
+*{
+  margin: 0px;
+}
+
+body {       /* Can alternatively define in html {} or :root {} */
+  color:black;
+  background-color:white;
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size:calc(10px + 2vmin);
+  text-align: center;
+  margin: 0px;
+  display: inline;
+}
+
+
+.underHeader{
+  justify-content: left;
+  background-color: #61B5CB;
+  height: 18vh;
+  margin: 0px;
+  display:block;
+  position: relative;
+  text-align: left;
+}
+
+
+/*  ----- Nav Bar -----  */
+
+ul {
+  list-style-type: none;
+  overflow: hidden;
+  background-color: #333;
+  position: sticky;
+  top: 0;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.active {
+  background-color: #04AA6D;
+}
+
+li a:hover {
+  background-color: #111;
+}
+
+
+/*  ----- Page layout blocks -----  */
+header, footer {
+  border: none;
+  font-size:x-large ;
+  background-size:cover;
+  height:300px;
+  margin: 0;
+  padding-right: 10%;
+  padding-left: 10%;
+  padding-top: 2%;
+}
+header{
+  text-align: left;
+}
+
+.img{
+  float: right;
+  object-position: 80% 50%;
+}
+
+
+
+/*remove headers not being used*/
+h1 {
+  flex-direction: column;
+  align-items:center;
+  justify-content: center;
+  font-size: calc(70px + 2vmin);
+  color: green;
+  text-decoration: underline;
+  font-family: cursive;
+  font-weight:500;
+}
+
+h2 {
+  justify-content: left;
+  padding-left: 2%;
+  padding-right: 2%;
+  padding-top: 2%;
+}
+
+h3 {
+  justify-content: left;
+  padding-left: 2%;
+  padding-right: 2%;
+  text-decoration: underline;
+}
+
+h4 {
+  justify-content: left;
+  padding-left: 2%;
+  padding-right: 2%;
+}
+
+/*  ----- Table ----- */
+table {
+  border-collapse: border;
+  border: 3px solid black;
+  width: 80%;
+  margin:0 auto;
+}
+caption {
+  color:black;
+  margin: 0 auto;
+  font-weight:bold;
+  padding:1% 0;
+}
+
+tr:nth-child(even) {
+  background-color: #FED985;
+}
+tr:nth-child(odd) {
+  background-color: white;
+}
+th {
+  border-bottom: 3px solid black;
+  background-color:whitesmoke;
+  font-weight:bolder;
+  padding: 20px;
+}
+
+td {
+  text-align: center;
+  border:none;
+  padding: 10px;
+  font-weight:100;
+  text-decoration-color: aquamarine;
+}
+  td:nth-child(1) {
+    font-style: italic;
+  }
+
+
+
+/*  ----- Form ----- */
+/* Style the form - display items horizontally */
+.form-inline { 
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Add some margins for each label */
+.form-inline label {
+  margin: 5px 10px 5px 0;
+}
+
+/* Style the input fields */
+.form-inline input {
+  vertical-align: middle;
+  margin: 5px 10px 5px 0;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+/* Style the submit button */
+.form-inline button {
+  padding: 10px 20px;
+  margin: 5px;
+  background-color: dodgerblue;
+  border: 1px solid #ddd;
+  color: white;
+}
+
+.form-inline button:hover {
+  background-color: royalblue;
+}
+
+
+.form-inline select {
+  position: relative;
+  height: 3em;
+  line-height: 3;
+  overflow: hidden;
+  border-radius: .25em;
+  margin-right: 5px;
+  margin-bottom:5px;
+}
+
+
+/*   ===== TABLET  media query overrides mobile styles ===== */
+@media all and (min-width: 600px) {}
+
+/*   ===== DESKTOP  media query overrides mobile and tablet styles ===== */
+@media all and (min-width: 1080px) {}
