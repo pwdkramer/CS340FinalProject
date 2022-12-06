@@ -211,14 +211,22 @@ app.delete('/delete-teacher-ajax', function(req, res, next) {
 
 app.put('/put-teacher-ajax', function(req, res, next){
     let data = req.body;
+    let queryUpdateSchool;
 
     let school_id = parseInt(data.school_id);
     let teacher = parseInt(data.fullname);
+    if (isNaN(school_id))
+    {
+        queryUpdateSchool = `UPDATE Teachers SET school_id = NULL WHERE Teachers.teacher_id = ${teacher}`;
+    }
+    else
+    {
+        queryUpdateSchool = `UPDATE Teachers SET school_id = ${school_id} WHERE Teachers.teacher_id = ${teacher}`;
+    }
 
-    let queryUpdateSchool = `UPDATE Teachers SET school_id = ? WHERE Teachers.teacher_id = ?`;
     let selectSchool = `SELECT * FROM Schools WHERE school_id = ?`;
 
-    db.pool.query(queryUpdateSchool, [school_id, teacher], function(error, rows, fields){
+    db.pool.query(queryUpdateSchool, function(error, rows, fields){
         if (error) {
             console.log(error);
             res.sendStatus(400);
@@ -334,14 +342,22 @@ app.delete('/delete-student-ajax', function(req, res, next) {
 
 app.put('/put-student-ajax', function(req, res, next){
     let data = req.body;
+    let queryUpdateSchool;
 
     let school_id = parseInt(data.school_id);
     let student = parseInt(data.fullname);
-
-    let queryUpdateSchool = `UPDATE Students SET school_id = ? WHERE Students.student_id = ?`;
+    if (isNaN(school_id))
+    {
+        queryUpdateSchool = `UPDATE Students SET school_id = NULL WHERE Students.student_id = ${student}`;
+    }
+    else
+    {
+        queryUpdateSchool = `UPDATE Students SET school_id = ${school_id} WHERE Students.student_id = ${student}`;
+    }
+    
     let selectSchool = `SELECT * FROM Schools WHERE school_id = ?`;
 
-    db.pool.query(queryUpdateSchool, [school_id, student], function(error, rows, fields){
+    db.pool.query(queryUpdateSchool, function(error, rows, fields){
         if (error) {
             console.log(error);
             res.sendStatus(400);
@@ -453,14 +469,22 @@ app.delete('/delete-class-ajax', function(req, res, next) {
 
 app.put('/put-class-ajax', function(req, res, next) {
     let data = req.body;
+    let queryUpdateTeacher;
 
     let teacher_id = parseInt(data.teacher_id);
     let aclass = parseInt(data.classname);
-
-    let queryUpdateTeacher = `UPDATE Classes SET teacher_id = ? WHERE Classes.class_id = ?`;
+    if (isNaN(teacher_id))
+    {
+        queryUpdateTeacher = `UPDATE Classes SET teacher_id = NULL WHERE Classes.class_id = ${aclass}`;
+    }
+    else
+    {
+        queryUpdateTeacher = `UPDATE Classes SET teacher_id = ${teacher_id} WHERE Classes.class_id = ${aclass}`;
+    }
+    
     let selectTeacher = `SELECT * FROM Teachers WHERE teacher_id = ?`;
 
-    db.pool.query(queryUpdateTeacher, [teacher_id, aclass], function(error, rows, fields) {
+    db.pool.query(queryUpdateTeacher, function(error, rows, fields) {
         if (error) {
             console.log(error);
             res.sendStatus(400);
